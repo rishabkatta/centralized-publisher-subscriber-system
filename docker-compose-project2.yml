@@ -1,0 +1,153 @@
+# Test this without rebuilding the docker image $> docker-compose up
+# Test this with rebuilding the docker image $> docker-compose up --build
+
+version: '3.7'
+
+services:
+  peer1:
+    build:
+      context: .
+      dockerfile: Dockerfile-project2
+    image: project2:rishabk
+    hostname: eventmanager
+    container_name: eventmanager
+    working_dir: /csci652
+    networks:
+      - csci652network
+    ports:
+      - 9091
+      - 9092
+      - 9093
+    command:
+      - /bin/bash
+      - -c
+      - |
+        cd project2/
+        tail -F anything
+
+
+
+  peer2:
+    depends_on:
+      - peer1
+    build:
+      context: .
+      dockerfile: Dockerfile-project2
+    image: project2:rishabk
+    hostname: publisher1
+    container_name: publisher1
+    working_dir: /csci652
+    networks:
+      - csci652network
+    ports:
+      - 6969
+      - 9091
+      - 9092
+      - 9093
+    command:
+      - /bin/bash
+      - -c
+      - |
+        cd project2/
+        tail -F anything
+
+
+  peer3:
+    depends_on:
+      - peer1
+    build:
+      context: .
+      dockerfile: Dockerfile-project2
+    image: project2:rishabk
+    hostname: publisher2
+    container_name: publisher2
+    working_dir: /csci652
+    networks:
+      - csci652network
+    ports:
+      - 6969
+      - 9091
+      - 9092
+      - 9093
+    command:
+      - /bin/bash
+      - -c
+      - |
+        cd project2/
+        tail -F anything
+
+  peer4:
+    depends_on:
+      - peer1
+    build:
+      context: .
+      dockerfile: Dockerfile-project2
+    image: project2:rishabk
+    hostname: subscriber1
+    container_name: subscriber1
+    working_dir: /csci652
+    networks:
+      - csci652network
+    ports:
+      - 6969
+      - 9091
+      - 9092
+      - 9093
+    command:
+      - /bin/bash
+      - -c
+      - |
+        cd project2/
+        tail -F anything
+
+  peer5:
+    depends_on:
+      - peer1
+    build:
+      context: .
+      dockerfile: Dockerfile-project2
+    image: project2:rishabk
+    hostname: subscriber2
+    container_name: subscriber2
+    working_dir: /csci652
+    networks:
+      - csci652network
+    ports:
+      - 6969
+      - 9091
+      - 9092
+      - 9093
+    command:
+      - /bin/bash
+      - -c
+      - |
+        cd project2/
+        tail -F anything
+
+  peer6:
+    depends_on:
+      - peer1
+    build:
+      context: .
+      dockerfile: Dockerfile-project2
+    image: project2:rishabk
+    hostname: subscriber3
+    container_name: subscriber3
+    working_dir: /csci652
+    networks:
+      - csci652network
+    ports:
+      - 6969
+      - 9091
+      - 9092
+      - 9093
+    command:
+      - /bin/bash
+      - -c
+      - |
+        cd project2/
+        tail -F anything
+
+
+networks:
+  csci652network:
